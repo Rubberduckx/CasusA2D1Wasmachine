@@ -1,0 +1,35 @@
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.select-list,
+.search-input {
+    margin: 5px;
+    width: 200px;
+}
+
+.search-button {
+    margin: 5px;
+    width: 80px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+.text-center {
+    color: red;
+}

@@ -20,11 +20,63 @@ namespace WebApplicationCasusWasmachine.Controllers
         }
 
         // GET: Devices
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //      return _context.devices != null ? 
+        //                  View(await _context.devices.ToListAsync()) :
+        //                  Problem("Entity set 'AppDbContext.devices'  is null.");
+        //}
+
+        public ActionResult Index(string Search, string Criteria)
         {
-              return _context.devices != null ? 
-                          View(await _context.devices.ToListAsync()) :
-                          Problem("Entity set 'AppDbContext.devices'  is null.");
+            if (Search != null)
+            {
+                if (Criteria == "Brand")
+                {
+                    var FindData = _context.devices.Where(x => x.Brand.Contains(Search)).ToList();
+                    if (FindData.Count == 0)
+                    {
+                        ViewBag.Msg = "Geen apparaten gevonden";
+                        return View();
+                    }
+                    else
+                    {
+                        return View(FindData);
+                    }
+                }
+
+                if (Criteria == "Model")
+                {
+                    var FindData = _context.devices.Where(x => x.Model.Contains(Search)).ToList();
+                    if (FindData.Count == 0)
+                    {
+                        ViewBag.Msg = "Geen apparaten gevonden";
+                        return View();
+                    }
+                    else
+                    {
+                        return View(FindData);
+                    }
+                }
+
+                if (Criteria == "Category")
+                {
+                    var FindData = _context.devices.Where(x => x.Category.Contains(Search)).ToList();
+                    if (FindData.Count == 0)
+                    {
+                        ViewBag.Msg = "Geen apparaten gevonden";
+                        return View();
+                    }
+                    else
+                    {
+                        return View(FindData);
+                    }
+                }
+
+
+            }
+            var obj = _context.devices.ToList();
+            return View(obj);
         }
 
         // GET: Devices/Details/5

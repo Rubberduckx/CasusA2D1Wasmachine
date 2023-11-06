@@ -1,6 +1,83 @@
 ﻿@model IEnumerable<WebApplicationCasusWasmachine.Models.Device>
 
 @{
+    ViewData["Title"] = "Display";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<link href="~/css/devicesstylesheet.css" rel="stylesheet" />
+
+</head>
+<body>
+    <h1>Apparaten</h1>
+
+    <div class="search-container">
+        @using (Html.BeginForm())
+        {
+            <label>Kies een zoek criteria</label>
+            <select name="Criteria" class="select-list">
+                <option value="Brand">Apparaat merk</option>
+                <option value="Category">Apparaat categorie</option>
+                <option value="Model">Apparaat model</option>
+            </select>
+
+            <input type="search" name="Search" class="search-input" placeholder="Zoek een device" />
+            <button class="search-button btn btn-outline-primary" type="submit"><span>Zoek</span></button>
+        }
+    </div>
+
+    <table>
+        @if (ViewBag.Msg == null)
+        {
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Brand)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Model)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Category)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Brand)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Model)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category)
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        }
+    </table>
+    <h1 class="text-center">@ViewBag.Msg</h1>
+</body>
+</html>
+
+
+
+
+
+@* @model IEnumerable<WebApplicationCasusWasmachine.Models.Device>
+
+@{
     ViewData["Title"] = "Index";
 }
 
@@ -75,3 +152,6 @@
 }
     </tbody>
 </table>
+ *@
+
+
