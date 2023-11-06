@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Heijen\\Desktop\\School-HBO\\Projects VS\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine.csproj": {}
+    "C:\\Users\\Heijen\\Desktop\\Github\\CasusA2D1Wasmachine\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Heijen\\Desktop\\School-HBO\\Projects VS\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine.csproj": {
+    "C:\\Users\\Heijen\\Desktop\\Github\\CasusA2D1Wasmachine\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Heijen\\Desktop\\School-HBO\\Projects VS\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine.csproj",
+        "projectUniqueName": "C:\\Users\\Heijen\\Desktop\\Github\\CasusA2D1Wasmachine\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine.csproj",
         "projectName": "WebApplicationCasusWasmachine",
-        "projectPath": "C:\\Users\\Heijen\\Desktop\\School-HBO\\Projects VS\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine.csproj",
+        "projectPath": "C:\\Users\\Heijen\\Desktop\\Github\\CasusA2D1Wasmachine\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine.csproj",
         "packagesPath": "C:\\Users\\Heijen\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Heijen\\Desktop\\School-HBO\\Projects VS\\WebApplicationCasusWasmachine\\WebApplicationCasusWasmachine\\obj\\",
+        "outputPath": "C:\\Users\\Heijen\\Desktop\\Github\\CasusA2D1Wasmachine\\WebApplicationCasusWasmachine\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,30 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.23, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.16, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
