@@ -19,14 +19,20 @@ namespace WebApplicationCasusWasmachine.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Device>()
-                .HasOne(o => o.User)
+                .HasOne(o => o.UserDevice)
                 .WithMany(v => v.Devices)
-                .HasForeignKey(o => o.UserId);
+                .HasForeignKey(o => o.UserIdDevice);
+
+            modelBuilder.Entity<Report>()
+                .HasOne(o => o.Device)
+                .WithMany(v => v.Reports)
+                .HasForeignKey(o => o.DeviceId);
 
             modelBuilder.Entity<Goal>()
                 .HasOne(o => o.User)
                 .WithMany(v => v.Goals)
                 .HasForeignKey(o => o.UserId);
+
         }
 
 

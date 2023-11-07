@@ -58,13 +58,13 @@ namespace WebApplicationCasusWasmachine.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Country,Age,Level")] User user)
         {
-            if (ModelState.IsValid)
-            {
+            
+            
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(user);
+            
+            
         }
 
         // GET: Users/Edit/5
@@ -95,8 +95,7 @@ namespace WebApplicationCasusWasmachine.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+            
                 try
                 {
                     _context.Update(user);
@@ -114,8 +113,7 @@ namespace WebApplicationCasusWasmachine.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            return View(user);
+            
         }
 
         // GET: Users/Delete/5

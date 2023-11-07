@@ -9,6 +9,8 @@ namespace WebApplicationCasusWasmachine.Models
         [Required]
         public DateTime DateOfCreation { get; set; }
         public string Content { get; set; }
-        //public Device Device { get; set; }
+
+        public int DeviceId { get; set; }
+        public Device Device { get; set; }
     }
 }

@@ -22,9 +22,8 @@ namespace WebApplicationCasusWasmachine.Controllers
         // GET: Reports
         public async Task<IActionResult> Index()
         {
-              return _context.Reports != null ? 
-                          View(await _context.Reports.ToListAsync()) :
-                          Problem("Entity set 'AppDbContext.Reports'  is null.");
+            var appDbContext = _context.Reports.Include(r => r.Device);
+            return View(await appDbContext.ToListAsync());
         }
 
         // GET: Reports/Details/5
@@ -36,6 +35,7 @@ namespace WebApplicationCasusWasmachine.Controllers
             }
 
             var report = await _context.Reports
+                .Include(r => r.Device)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (report == null)
             {
@@ -48,6 +48,7 @@ namespace WebApplicationCasusWasmachine.Controllers
         // GET: Reports/Create
         public IActionResult Create()
         {
+            ViewData["DeviceId"] = new SelectList(_context.devices, "Id", "Brand");
             return View();
         }
 
@@ -56,15 +57,13 @@ namespace WebApplicationCasusWasmachine.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DateOfCreation,Content")] Report report)
+        public async Task<IActionResult> Create([Bind("Id,DateOfCreation,Content,DeviceId")] Report report)
         {
-            if (ModelState.IsValid)
-            {
+           
                 _context.Add(report);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(report);
+            
         }
 
         // GET: Reports/Edit/5
@@ -80,6 +79,7 @@ namespace WebApplicationCasusWasmachine.Controllers
             {
                 return NotFound();
             }
+            ViewData["DeviceId"] = new SelectList(_context.devices, "Id", "Brand", report.DeviceId);
             return View(report);
         }
 
@@ -88,15 +88,14 @@ namespace WebApplicationCasusWasmachine.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DateOfCreation,Content")] Report report)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DateOfCreation,Content,DeviceId")] Report report)
         {
             if (id != report.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+            
                 try
                 {
                     _context.Update(report);
@@ -114,8 +113,8 @@ namespace WebApplicationCasusWasmachine.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            return View(report);
+            
+           
         }
 
         // GET: Reports/Delete/5
@@ -127,6 +126,7 @@ namespace WebApplicationCasusWasmachine.Controllers
             }
 
             var report = await _context.Reports
+                .Include(r => r.Device)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (report == null)
             {

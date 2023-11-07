@@ -20,63 +20,10 @@ namespace WebApplicationCasusWasmachine.Controllers
         }
 
         // GET: Devices
-        //public async Task<IActionResult> Index()
-        //{
-        //      return _context.devices != null ? 
-        //                  View(await _context.devices.ToListAsync()) :
-        //                  Problem("Entity set 'AppDbContext.devices'  is null.");
-        //}
-
-        public ActionResult Index(string Search, string Criteria)
+        public async Task<IActionResult> Index()
         {
-            if (Search != null)
-            {
-                if (Criteria == "Brand")
-                {
-                    var FindData = _context.devices.Where(x => x.Brand.Contains(Search)).ToList();
-                    if (FindData.Count == 0)
-                    {
-                        ViewBag.Msg = "Geen apparaten gevonden";
-                        return View();
-                    }
-                    else
-                    {
-                        return View(FindData);
-                    }
-                }
-
-                if (Criteria == "Model")
-                {
-                    var FindData = _context.devices.Where(x => x.Model.Contains(Search)).ToList();
-                    if (FindData.Count == 0)
-                    {
-                        ViewBag.Msg = "Geen apparaten gevonden";
-                        return View();
-                    }
-                    else
-                    {
-                        return View(FindData);
-                    }
-                }
-
-                if (Criteria == "Category")
-                {
-                    var FindData = _context.devices.Where(x => x.Category.Contains(Search)).ToList();
-                    if (FindData.Count == 0)
-                    {
-                        ViewBag.Msg = "Geen apparaten gevonden";
-                        return View();
-                    }
-                    else
-                    {
-                        return View(FindData);
-                    }
-                }
-
-
-            }
-            var obj = _context.devices.ToList();
-            return View(obj);
+            var appDbContext = _context.devices.Include(d => d.UserDevice);
+            return View(await appDbContext.ToListAsync());
         }
 
         // GET: Devices/Details/5
@@ -88,6 +35,7 @@ namespace WebApplicationCasusWasmachine.Controllers
             }
 
             var device = await _context.devices
+                .Include(d => d.UserDevice)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (device == null)
             {
@@ -100,6 +48,7 @@ namespace WebApplicationCasusWasmachine.Controllers
         // GET: Devices/Create
         public IActionResult Create()
         {
+            ViewData["UserIdDevice"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
@@ -108,16 +57,14 @@ namespace WebApplicationCasusWasmachine.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Brand,Model,energyLabel,KwH,manufactureDate,warrentyEndDate,Category,lifeSpan")] Device device)
+        public async Task<IActionResult> Create([Bind("Id,Brand,Model,energyLabel,KwH,manufactureDate,warrentyEndDate,Category,lifeSpan,UserIdDevice")] Device device)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(device);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(device);
-        }
+
+            _context.Add(device);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+        } 
 
         // GET: Devices/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -132,6 +79,7 @@ namespace WebApplicationCasusWasmachine.Controllers
             {
                 return NotFound();
             }
+            ViewData["UserIdDevice"] = new SelectList(_context.Users, "Id", "Name", device.UserIdDevice);
             return View(device);
         }
 
@@ -140,15 +88,14 @@ namespace WebApplicationCasusWasmachine.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Brand,Model,energyLabel,KwH,manufactureDate,warrentyEndDate,Category,lifeSpan")] Device device)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Brand,Model,energyLabel,KwH,manufactureDate,warrentyEndDate,Category,lifeSpan,UserIdDevice")] Device device)
         {
             if (id != device.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+           
                 try
                 {
                     _context.Update(device);
@@ -166,8 +113,8 @@ namespace WebApplicationCasusWasmachine.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            return View(device);
+            
+            
         }
 
         // GET: Devices/Delete/5
@@ -179,6 +126,7 @@ namespace WebApplicationCasusWasmachine.Controllers
             }
 
             var device = await _context.devices
+                .Include(d => d.UserDevice)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (device == null)
             {

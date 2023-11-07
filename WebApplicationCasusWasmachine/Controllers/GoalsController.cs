@@ -22,9 +22,8 @@ namespace WebApplicationCasusWasmachine.Controllers
         // GET: Goals
         public async Task<IActionResult> Index()
         {
-              return _context.Goals != null ? 
-                          View(await _context.Goals.ToListAsync()) :
-                          Problem("Entity set 'AppDbContext.Goals'  is null.");
+            var appDbContext = _context.Goals.Include(g => g.User);
+            return View(await appDbContext.ToListAsync());
         }
 
         // GET: Goals/Details/5
@@ -36,6 +35,7 @@ namespace WebApplicationCasusWasmachine.Controllers
             }
 
             var goal = await _context.Goals
+                .Include(g => g.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (goal == null)
             {
@@ -48,6 +48,7 @@ namespace WebApplicationCasusWasmachine.Controllers
         // GET: Goals/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
@@ -56,15 +57,14 @@ namespace WebApplicationCasusWasmachine.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Status")] Goal goal)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,Status,UserId")] Goal goal)
         {
-            if (ModelState.IsValid)
-            {
+            
                 _context.Add(goal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(goal);
+            
+            
         }
 
         // GET: Goals/Edit/5
@@ -80,6 +80,7 @@ namespace WebApplicationCasusWasmachine.Controllers
             {
                 return NotFound();
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", goal.UserId);
             return View(goal);
         }
 
@@ -88,15 +89,14 @@ namespace WebApplicationCasusWasmachine.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Status")] Goal goal)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,Status,UserId")] Goal goal)
         {
             if (id != goal.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+            
                 try
                 {
                     _context.Update(goal);
@@ -114,8 +114,7 @@ namespace WebApplicationCasusWasmachine.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            return View(goal);
+            
         }
 
         // GET: Goals/Delete/5
@@ -127,6 +126,7 @@ namespace WebApplicationCasusWasmachine.Controllers
             }
 
             var goal = await _context.Goals
+                .Include(g => g.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (goal == null)
             {

@@ -1,16 +1,14 @@
 ﻿@model IEnumerable<WebApplicationCasusWasmachine.Models.Device>
 
 @{
-    ViewData["Title"] = "Display";
+    ViewData["Title"] = "Index";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-	<link href="~/css/devicesstylesheet.css" rel="stylesheet" />
+<h1>Index</h1>
 
-</head>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <body>
     <h1>Apparaten</h1>
 
@@ -28,64 +26,8 @@
             <button class="search-button btn btn-outline-primary" type="submit"><span>Zoek</span></button>
         }
     </div>
-
-    <table>
-        @if (ViewBag.Msg == null)
-        {
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Brand)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Model)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Category)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Brand)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Model)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Category)
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        }
-    </table>
-    <h1 class="text-center">@ViewBag.Msg</h1>
 </body>
-</html>
 
-
-
-
-
-@* @model IEnumerable<WebApplicationCasusWasmachine.Models.Device>
-
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -112,6 +54,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.lifeSpan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserDevice)
             </th>
             <th></th>
         </tr>
@@ -144,6 +89,9 @@
                 @Html.DisplayFor(modelItem => item.lifeSpan)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.UserDevice.Name)
+            </td>
+            <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -152,6 +100,7 @@
 }
     </tbody>
 </table>
- *@
+
+
 
 
