@@ -20,11 +20,31 @@ namespace WebApplicationCasusWasmachine.Controllers
         }
 
         // GET: Devices
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var appDbContext = _context.devices.Include(d => d.UserDevice);
+        //    return View(await appDbContext.ToListAsync());
+        //}
+
+        public async Task<IActionResult> Index(int? UserIdDevice)
         {
-            var appDbContext = _context.devices.Include(d => d.UserDevice);
-            return View(await appDbContext.ToListAsync());
+            
+
+            if (UserIdDevice != null)
+            {
+                var AppDbContext = _context.devices
+                    .Include(v => v.UserDevice)
+                    .Where(o => o.UserIdDevice == UserIdDevice);
+                return View(await AppDbContext.ToListAsync());
+            }
+            else
+            {
+                var appDbContext = _context.devices.Include(c => c.UserDevice);
+                return View(await appDbContext.ToListAsync());
+            }
         }
+
+
 
         // GET: Devices/Details/5
         public async Task<IActionResult> Details(int? id)
