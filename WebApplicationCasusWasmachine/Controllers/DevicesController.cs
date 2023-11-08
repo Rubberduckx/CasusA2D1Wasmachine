@@ -26,15 +26,89 @@ namespace WebApplicationCasusWasmachine.Controllers
         //    return View(await appDbContext.ToListAsync());
         //}
 
-        public async Task<IActionResult> Index(int? UserIdDevice)
-        {
-            
 
-            if (UserIdDevice != null)
+
+
+        //public async Task<IActionResult> Index(int? UserIdDevice)
+        //{
+
+
+        //    if (UserIdDevice != null)
+        //    {
+        //        var AppDbContext = _context.devices
+        //            .Include(v => v.UserDevice)
+        //            .Where(o => o.UserIdDevice == UserIdDevice);
+        //        return View(await AppDbContext.ToListAsync());
+        //    }
+        //    else
+        //    {
+        //        var appDbContext = _context.devices.Include(c => c.UserDevice);
+        //        return View(await appDbContext.ToListAsync());
+        //    }
+        //}
+
+        public async Task<IActionResult> SearchDevice(string Search, string Criteria)
+        {
+            if (Search != null)
+            {
+                if (Criteria == "Brand")
+                {
+                    var FindData = _context.devices.Include(d => d.UserDevice).Where(d => d.Brand.Contains(Search)).ToList();
+                    if (FindData.Count == 0)
+                    {
+                        ViewBag.Msg = "Geen apparaten gevonden";
+                        return View();
+                    }
+                    else
+                    {
+                        return View(FindData);
+                    }
+                }
+
+                if (Criteria == "Category")
+                {
+                    var FindData = _context.devices.Include(d => d.UserDevice).Where(d => d.Category.Contains(Search)).ToList();
+                    if (FindData.Count == 0)
+                    {
+                        ViewBag.Msg = "Geen apparaten gevonden";
+                        return View();
+                    }
+                    else
+                    {
+                        return View(FindData);
+                    }
+                }
+
+                if (Criteria == "Model")
+                {
+                    var FindData = _context.devices.Include(d => d.UserDevice).Where(d => d.Model.Contains(Search)).ToList();
+                    if (FindData.Count == 0)
+                    {
+                        ViewBag.Msg = "Geen apparaten gevonden";
+                        return View();
+                    }
+                    else
+                    {
+                        return View(FindData);
+                    }
+                }
+
+
+            }
+            var obj = _context.devices.Include(d => d.UserDevice).ToList();
+            return View(obj);
+        }
+
+
+        public async Task<IActionResult> Index()
+        {
+            int userId = int.Parse(HttpContext.Session.GetString("UserId"));
+
+            if (userId != null)
             {
                 var AppDbContext = _context.devices
-                    .Include(v => v.UserDevice)
-                    .Where(o => o.UserIdDevice == UserIdDevice);
+                    .Include(d => d.UserDevice)
+                    .Where(d => d.UserIdDevice == userId);
                 return View(await AppDbContext.ToListAsync());
             }
             else
@@ -43,8 +117,6 @@ namespace WebApplicationCasusWasmachine.Controllers
                 return View(await appDbContext.ToListAsync());
             }
         }
-
-
 
         // GET: Devices/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -68,7 +140,7 @@ namespace WebApplicationCasusWasmachine.Controllers
         // GET: Devices/Create
         public IActionResult Create()
         {
-            ViewData["UserIdDevice"] = new SelectList(_context.Users, "Id", "Name");
+            //ViewData["UserIdDevice"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
@@ -77,9 +149,26 @@ namespace WebApplicationCasusWasmachine.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Brand,Model,energyLabel,KwH,manufactureDate,warrentyEndDate,Category,lifeSpan,UserIdDevice")] Device device)
+        public async Task<IActionResult> Create([Bind("Id,Brand,Model,energyLabel,KwH,manufactureDate,warrentyEndDate,Category,lifeSpan")] Device device)
         {
+            int userId = int.Parse(HttpContext.Session.GetString("UserId"));
+            device.UserIdDevice = userId;
 
+            // User ophalen en zijn punten,geuploade devices updaten
+
+            User user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            user.UploadedDevices += 1;
+            //user.Points += 5;
+            user.GetPoints(_context,5);
+            // Controleren of level om hoog moet gaan en bijwerken
+
+            int uploadedDevices = user.UploadedDevices + 1;
+            // Hier kunnen we de voorwarden van de level veranderen bijvoorbeeld elke 2 geuploade apparaten of meer 
+            //if (uploadedDevices % 2 == 0)
+            //{
+            //    user.Level++;
+            //}
+            user.LevelUp(_context);
             _context.Add(device);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

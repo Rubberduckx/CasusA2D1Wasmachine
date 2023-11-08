@@ -10,22 +10,7 @@
     <a asp-action="Create">Create New</a>
 </p>
 <body>
-    <h1>Apparaten</h1>
-
-    <div class="search-container">
-        @using (Html.BeginForm())
-        {
-            <label>Kies een zoek criteria</label>
-            <select name="Criteria" class="select-list">
-                <option value="Brand">Apparaat merk</option>
-                <option value="Category">Apparaat categorie</option>
-                <option value="Model">Apparaat model</option>
-            </select>
-
-            <input type="search" name="Search" class="search-input" placeholder="Zoek een device" />
-            <button class="search-button btn btn-outline-primary" type="submit"><span>Zoek</span></button>
-        }
-    </div>
+    <h1>My devices</h1>
 </body>
 <table class="table table-hover">
     <thead>
@@ -37,26 +22,15 @@
                 @Html.DisplayNameFor(model => model.Model)
             </th>
             <th>
-                <label style="font-size:medium">Energy Label</label>
-            </th>
-            <th>
-                <label style="font-size:medium">KiloWatt Per Hour</label>
-            </th>
-            <th>
-                <label style="font-size:medium">Manufacturing Date</label>
-            </th>
-            <th>
-                <label style="font-size:medium">Warranty End Date</label>
+                <label style="font-size:medium">Energy label</label>
             </th>
             <th>
                 <label style="font-size:medium">Category</label>
             </th>
             <th>
-                <label style="font-size:medium">Life Span in years</label>
-            </th>
-            <th>
                 <label style="font-size:medium">User</label>
             </th>
+
             <th></th>
         </tr>
     </thead>
@@ -74,19 +48,7 @@
                     @Html.DisplayFor(modelItem => item.energyLabel)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.KwH)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.manufactureDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.warrentyEndDate)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Category)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.lifeSpan)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.UserDevice.Name)

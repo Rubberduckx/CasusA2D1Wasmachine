@@ -42,7 +42,7 @@
             </div>
         </nav>*@
 
-
+        
         <nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Wasmachine Opdracht</a>
@@ -53,12 +53,15 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>                                           
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Devices" asp-action="SearchDevice">Devices</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">User</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Devices" asp-action="Create">Upload device</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Devices" asp-action="Index">Device</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Devices" asp-action="Index">My devices</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Goals" asp-action="Index">Goal</a>
@@ -68,8 +71,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="UsingReports" asp-action="Index">Using Report</a>
+                        </li>                   
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Profile">Profile</a>
                         </li>
                     </ul>
+                    
 @*                    <form class="d-flex">
                         <input class="form-control me-sm-2" type="search" placeholder="Search">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
@@ -89,11 +96,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    @* <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - WebApplicationCasusWasmachine - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

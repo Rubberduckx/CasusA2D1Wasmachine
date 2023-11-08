@@ -19,6 +19,52 @@ namespace WebApplicationCasusWasmachine.Controllers
             _context = context;
         }
 
+
+		public IActionResult LogIn()
+		{
+			return View();
+		}
+
+
+		[HttpPost, ActionName("login")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> LogIn(string email, string password)
+		{
+			var user = _context.Users
+			.Where(u => u.Email == email && u.Password == password)
+			.FirstOrDefault();
+
+			if (user != null)
+			{
+				string id = user.Id.ToString();
+				string userName = user.Name;
+
+                HttpContext.Session.SetString("Name", userName);
+				HttpContext.Session.SetString("UserId", id);
+
+
+				return RedirectToAction("Index", "Home");
+			}
+			else
+			{
+				ViewData["Message"] = "wrong email or password";
+				return View();
+			}
+		}
+
+        public async Task<IActionResult> Profile()
+        {
+            int id = int.Parse(HttpContext.Session.GetString("UserId"));
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
         // GET: Users
         public async Task<IActionResult> Index()
         {
@@ -56,13 +102,16 @@ namespace WebApplicationCasusWasmachine.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Country,Age,Level")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,Password,Country,Age")] User user)
         {
-            
-            
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+            user.Level = 0;
+            user.UploadedDevices = 0;
+            user.Points = 0;
+
+            _context.Add(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(LogIn));
             
             
         }

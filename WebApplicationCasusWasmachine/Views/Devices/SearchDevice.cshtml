@@ -1,0 +1,85 @@
+﻿@model IEnumerable<WebApplicationCasusWasmachine.Models.Device>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
+</p>
+<body>
+    <h1>Apparaten</h1>
+
+    <div class="search-container">
+        @using (Html.BeginForm())
+        {
+            <label>Kies een zoek criteria</label>
+            <select name="Criteria" class="select-list">
+                <option value="Brand">Apparaat merk</option>
+                <option value="Category">Apparaat categorie</option>
+                <option value="Model">Apparaat model</option>
+            </select>
+
+            <input type="search" name="Search" class="search-input" placeholder="Zoek een device" />
+            <button class="search-button btn btn-outline-primary" type="submit"><span>Zoek</span></button>
+        }
+    </div>
+</body>
+<table class="table table-hover">
+    @if (ViewBag.Msg == null)
+    {
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Brand)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Model)
+                </th>
+                <th>
+                    <label style="font-size:medium">Energy Label</label>
+                </th>
+                
+                <th>
+                    <label style="font-size:medium">Category</label>
+                </th>
+                <th>
+                    <label style="font-size:medium">Uploaded by</label>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.energyLabel)
+                    </td>
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    
+                    <td>
+                        <a asp-controller= "Users" asp-action="Details" asp-route-id = "@item.UserDevice.Id">@Html.DisplayFor(modelItem => item.UserDevice.Name)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Details</a>
+                        <a asp-controller="UsingReports" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-primary">Using Reports</a>
+                        <a asp-controller="Reports" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-primary">Reports</a>
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    }
+</table>
