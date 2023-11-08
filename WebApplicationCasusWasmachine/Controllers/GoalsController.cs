@@ -20,10 +20,20 @@ namespace WebApplicationCasusWasmachine.Controllers
         }
 
         // GET: Goals
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? UserId)
         {
-            var appDbContext = _context.Goals.Include(g => g.User);
-            return View(await appDbContext.ToListAsync());
+            if (UserId != null)
+            {
+                var AppDbContext = _context.Goals
+                    .Include(v => v.User)
+                    .Where(o => o.UserId == UserId);
+                return View(await AppDbContext.ToListAsync());
+            }
+            else
+            {
+                var appDbContext = _context.Goals.Include(c => c.User);
+                return View(await appDbContext.ToListAsync());
+            }
         }
 
         // GET: Goals/Details/5

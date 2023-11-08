@@ -27,8 +27,7 @@
         }
     </div>
 </body>
-
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
@@ -38,25 +37,123 @@
                 @Html.DisplayNameFor(model => model.Model)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.energyLabel)
+                <label style="font-size:medium">Energy Label</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.KwH)
+                <label style="font-size:medium">KiloWatt Per Hour</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.manufactureDate)
+                <label style="font-size:medium">Manufacturing Date</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.warrentyEndDate)
+                <label style="font-size:medium">Warranty End Date</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                <label style="font-size:medium">Category</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.lifeSpan)
+                <label style="font-size:medium">Life Span in years</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserDevice)
+                <label style="font-size:medium">User</label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.energyLabel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KwH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.manufactureDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.warrentyEndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lifeSpan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserDevice.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                    @Html.ActionLink("Using Reports", "Index", "UsingReports", new { DeviceId = item.Id}) |
+                    @Html.ActionLink("Reports", "Index", "Reports", new { DeviceId = item.Id}) |
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                <label style="font-size:medium">Energy Label</label>
+            </th>
+            <th>
+                <label style="font-size:medium">KiloWatt Per Hour</label>
+            </th>
+                        <th>
+                <label style="font-size:medium">Manufacturing Date</label>
+            </th>
+            <th>
+                <label style="font-size:medium">Warranty End Date</label>
+            </th>
+            <th>
+                <label style="font-size:medium">Category</label>
+            </th>
+            <th>
+                <label style="font-size:medium">Life Span in years</label>
+            </th>
+            <th>
+                <label style="font-size:medium">User</label>
             </th>
             <th></th>
         </tr>
@@ -94,13 +191,16 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                 
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                @Html.ActionLink("Using Reports", "Index", "UsingReports", new { DeviceId = item.Id}) |
+                @Html.ActionLink("Reports", "Index", "Reports", new { DeviceId = item.Id}) |
+
+
             </td>
         </tr>
 }
     </tbody>
-</table>
+</table>*@
 
 
 

@@ -33,7 +33,13 @@ namespace WebApplicationCasusWasmachine.Data
                 .WithMany(v => v.Goals)
                 .HasForeignKey(o => o.UserId);
 
+            modelBuilder.Entity<UsingReport>()
+                .HasOne(o => o.Device)
+                .WithMany(v => v.Usingreports)
+                .HasForeignKey(o => o.DeviceId);
         }
+
+        public DbSet<UsingReport> UsingReports { get; set; }
 
 
     }

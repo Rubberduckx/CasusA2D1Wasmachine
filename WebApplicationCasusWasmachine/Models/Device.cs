@@ -18,6 +18,6 @@ namespace WebApplicationCasusWasmachine.Models
         public int UserIdDevice { get; set; }
         public User UserDevice { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
-        //public Report Report { get; set; }
+        public List<UsingReport> Usingreports { get; set; }
     }
 }

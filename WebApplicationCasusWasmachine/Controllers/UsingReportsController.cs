@@ -10,110 +10,120 @@ using WebApplicationCasusWasmachine.Models;
 
 namespace WebApplicationCasusWasmachine.Controllers
 {
-    public class ReportsController : Controller
+    public class UsingReportsController : Controller
     {
         private readonly AppDbContext _context;
 
-        public ReportsController(AppDbContext context)
+        public UsingReportsController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Reports
+        // GET: UsingReports
         public async Task<IActionResult> Index(int? DeviceId)
         {
             if (DeviceId != null)
             {
-                var AppDbContext = _context.Reports
+                var AppDbContext = _context.UsingReports
                     .Include(v => v.Device)
                     .Where(o => o.DeviceId == DeviceId);
                 return View(await AppDbContext.ToListAsync());
             }
             else
             {
-                var appDbContext = _context.Reports.Include(c => c.Device);
+                var appDbContext = _context.UsingReports.Include(c => c.Device);
                 return View(await appDbContext.ToListAsync());
             }
         }
 
-        // GET: Reports/Details/5
+        // GET: UsingReports/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Reports == null)
+            if (id == null || _context.UsingReports == null)
             {
                 return NotFound();
             }
 
-            var report = await _context.Reports
-                .Include(r => r.Device)
+            var usingReport = await _context.UsingReports
+                .Include(u => u.Device)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (report == null)
+            if (usingReport == null)
             {
                 return NotFound();
             }
 
-            return View(report);
+            return View(usingReport);
         }
 
-        // GET: Reports/Create
+        // GET: UsingReports/Create
         public IActionResult Create()
         {
             ViewData["DeviceId"] = new SelectList(_context.devices, "Id", "Brand");
             return View();
         }
 
-        // POST: Reports/Create
+        // POST: UsingReports/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DateOfCreation,Content,DeviceId")] Report report)
+        public async Task<IActionResult> Create([Bind("Id,DeviceName,Duration,Setting,DeviceId")] UsingReport usingReport)
         {
-           
-                _context.Add(report);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            
+
+            _context.Add(usingReport);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(usingReport);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //ViewData["DeviceId"] = new SelectList(_context.devices, "Id", "Brand", usingReport.DeviceId);
+            //return View(usingReport);
         }
 
-        // GET: Reports/Edit/5
+        // GET: UsingReports/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Reports == null)
+            if (id == null || _context.UsingReports == null)
             {
                 return NotFound();
             }
 
-            var report = await _context.Reports.FindAsync(id);
-            if (report == null)
+            var usingReport = await _context.UsingReports.FindAsync(id);
+            if (usingReport == null)
             {
                 return NotFound();
             }
-            ViewData["DeviceId"] = new SelectList(_context.devices, "Id", "Brand", report.DeviceId);
-            return View(report);
+            ViewData["DeviceId"] = new SelectList(_context.devices, "Id", "Brand", usingReport.DeviceId);
+            return View(usingReport);
         }
 
-        // POST: Reports/Edit/5
+        // POST: UsingReports/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DateOfCreation,Content,DeviceId")] Report report)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DeviceName,Duration,Setting,DeviceId")] UsingReport usingReport)
         {
-            if (id != report.Id)
+            if (id != usingReport.Id)
             {
                 return NotFound();
             }
 
-            
+            if (ModelState.IsValid)
+            {
                 try
                 {
-                    _context.Update(report);
+                    _context.Update(usingReport);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReportExists(report.Id))
+                    if (!UsingReportExists(usingReport.Id))
                     {
                         return NotFound();
                     }
@@ -123,51 +133,52 @@ namespace WebApplicationCasusWasmachine.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            
-           
+            }
+            ViewData["DeviceId"] = new SelectList(_context.devices, "Id", "Brand", usingReport.DeviceId);
+            return View(usingReport);
         }
 
-        // GET: Reports/Delete/5
+        // GET: UsingReports/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Reports == null)
+            if (id == null || _context.UsingReports == null)
             {
                 return NotFound();
             }
 
-            var report = await _context.Reports
-                .Include(r => r.Device)
+            var usingReport = await _context.UsingReports
+                .Include(u => u.Device)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (report == null)
+            if (usingReport == null)
             {
                 return NotFound();
             }
 
-            return View(report);
+            return View(usingReport);
         }
 
-        // POST: Reports/Delete/5
+        // POST: UsingReports/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Reports == null)
+            if (_context.UsingReports == null)
             {
-                return Problem("Entity set 'AppDbContext.Reports'  is null.");
+                return Problem("Entity set 'AppDbContext.UsingReports'  is null.");
             }
-            var report = await _context.Reports.FindAsync(id);
-            if (report != null)
+            var usingReport = await _context.UsingReports.FindAsync(id);
+            if (usingReport != null)
             {
-                _context.Reports.Remove(report);
+                _context.UsingReports.Remove(usingReport);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ReportExists(int id)
+        private bool UsingReportExists(int id)
         {
-          return (_context.Reports?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.UsingReports?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
