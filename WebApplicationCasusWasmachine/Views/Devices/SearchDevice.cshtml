@@ -4,25 +4,24 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Devices</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
+    <a asp-action="Create" class="btn btn-outline-primary">Uplaod device</a>
 </p>
 <body>
-    <h1>Apparaten</h1>
 
     <div class="search-container">
         @using (Html.BeginForm())
         {
-            <label>Kies een zoek criteria</label>
+            <label>Choose a search criteria</label>
             <select name="Criteria" class="select-list">
-                <option value="Brand">Apparaat merk</option>
-                <option value="Category">Apparaat categorie</option>
-                <option value="Model">Apparaat model</option>
+                <option value="Brand">Brand</option>
+                <option value="Category">Category</option>
+                <option value="Model">Model</option>
             </select>
 
-            <input type="search" name="Search" class="search-input" placeholder="Zoek een device" />
+            <input type="search" name="Search" class="search-input" placeholder="Search a device" />
             <button class="search-button btn btn-outline-primary" type="submit"><span>Zoek</span></button>
         }
     </div>

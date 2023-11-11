@@ -4,13 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>My devices</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-outline-primary">Upload device</a>
 </p>
 <body>
-    <h1>My devices</h1>
+    
 </body>
 <table class="table table-hover">
     <thead>
@@ -26,9 +26,6 @@
             </th>
             <th>
                 <label style="font-size:medium">Category</label>
-            </th>
-            <th>
-                <label style="font-size:medium">User</label>
             </th>
 
             <th></th>
@@ -51,14 +48,13 @@
                     @Html.DisplayFor(modelItem => item.Category)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserDevice.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                    @Html.ActionLink("Using Reports", "Index", "UsingReports", new { DeviceId = item.Id}) |
-                    @Html.ActionLink("Reports", "Index", "Reports", new { DeviceId = item.Id}) |
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Edit</a> 
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Details</a> 
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-primary">Delete</a>
+                    <a asp-controller= "UsingReports" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-primary">Using Report</a>
+                    <a asp-controller= "Reports" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-primary">Report</a>
+                    @* @Html.ActionLink("Using Reports", "Index", "UsingReports", new { DeviceId = item.Id})
+                    @Html.ActionLink("Reports", "Index", "Reports", new { DeviceId = item.Id}) | *@
 
 
                 </td>

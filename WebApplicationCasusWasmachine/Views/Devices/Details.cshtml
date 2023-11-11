@@ -23,25 +23,25 @@
             @Html.DisplayFor(model => model.Model)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.energyLabel)
+            Energy label
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.energyLabel)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.KwH)
+            Kilowatt-Hour (KwH)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.KwH)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.manufactureDate)
+            Manufacture Date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.manufactureDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.warrentyEndDate)
+            Warranty End Date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.warrentyEndDate)
@@ -53,20 +53,17 @@
             @Html.DisplayFor(model => model.Category)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.lifeSpan)
+            Lifespan
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.lifeSpan)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserDevice)
+            Uploaded by
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.UserDevice.Name)
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
