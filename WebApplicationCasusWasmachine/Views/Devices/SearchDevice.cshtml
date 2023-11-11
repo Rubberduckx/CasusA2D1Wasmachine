@@ -7,7 +7,7 @@
 <h1>Devices</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-outline-primary">Uplaod device</a>
+    <a asp-action="Create" class="btn btn-outline-primary">Upload device</a>
 </p>
 <body>
 
@@ -20,7 +20,6 @@
                 <option value="Category">Category</option>
                 <option value="Model">Model</option>
             </select>
-
             <input type="search" name="Search" class="search-input" placeholder="Search a device" />
             <button class="search-button btn btn-outline-primary" type="submit"><span>Zoek</span></button>
         }
@@ -74,8 +73,7 @@
                     <td>
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Details</a>
                         <a asp-controller="UsingReports" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-primary">Using Reports</a>
-                        <a asp-controller="Reports" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-primary">Reports</a>
-                        
+                        <a asp-controller="Reports" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-primary">Reports</a>                       
                     </td>
                 </tr>
             }

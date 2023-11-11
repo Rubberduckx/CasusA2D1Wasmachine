@@ -1,10 +1,11 @@
 ﻿@model WebApplicationCasusWasmachine.Models.User
 
 @{
-    ViewData["Title"] = "Create";   
+    ViewData["Title"] = "Create";
+    Layout = null;
 }
 
-<h1>Create</h1>
+@* <h1>Create</h1>
 
 <h4>User</h4>
 <hr />
@@ -50,4 +51,59 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+} *@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create User</title>
+    <link href="~/css/bootystraps.css" rel="stylesheet" />
+</head>
+<body>
+
+    <h1 style="margin: 30px">Create account</h1>
+    <hr />
+    <div class="row" style="display: flex; justify-content: center; align-items: center;">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Country" class="control-label"></label>
+                    <input asp-for="Country" class="form-control" />
+                    <span asp-validation-for="Country" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Age" class="control-label"></label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-outline-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <section>
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    </section>
+</body>
+</html>
